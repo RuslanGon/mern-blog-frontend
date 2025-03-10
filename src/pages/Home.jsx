@@ -2,20 +2,22 @@ import React, { useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
-// import axios from '../axios.js';
-
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../redux/slices/post.js';
 
 export const Home = () => {
 const dispatch = useDispatch()
+const posts = useSelector(state => state.posts.posts)
+const tags = useSelector(state => state.posts.tags)
+
+
   useEffect(() => {
     dispatch(fetchPosts())
   }, [dispatch]);
-
+console.log(posts);
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
