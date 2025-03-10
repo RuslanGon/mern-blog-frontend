@@ -9,15 +9,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../redux/slices/post.js';
 
 export const Home = () => {
-const dispatch = useDispatch()
-const posts = useSelector(state => state.posts.posts)
-const tags = useSelector(state => state.posts.tags)
-
+  const dispatch = useDispatch();
+  const posts = useSelector(state => state.posts.posts);  // Получаем посты
+  const tags = useSelector(state => state.posts.tags);  // Получаем теги
+  const isPostLoading = posts.status === 'loading';  // Проверка статуса загрузки постов
 
   useEffect(() => {
-    dispatch(fetchPosts())
+    dispatch(fetchPosts());  // Загружаем посты при монтировании компонента
   }, [dispatch]);
-console.log(posts);
+
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
@@ -26,27 +26,28 @@ console.log(posts);
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {[...Array(5)].map(() => (
+          {/* Если посты загружаются, показываем 5 пустых загрузочных блоков */}
+          {(isPostLoading ? [...Array(5)] : posts.items).map((obj, index) => (
             <Post
-              id={1}
-              title="Roast the code #1 | Rock Paper Scissors"
-              imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+              key={index}  // Добавляем ключ для каждого элемента в списке
+              id={obj ? obj._id : index}  // Используем ID поста или индекс для загрузки
+              title={obj ? obj.title : "Загружается..."}  // Если данные загружаются, показываем "Загружается..."
+              imageUrl={obj ? obj.imageUrl : "https://via.placeholder.com/150"}  // Заменяем на заглушку, если данные не загружены
               user={{
-                avatarUrl:
-                  'https://res.cloudinary.com/practicaldev/image/fetch/s--uigxYVRB--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/187971/a5359a24-b652-46be-8898-2c5df32aa6e0.png',
-                fullName: 'Keff',
+                avatarUrl: obj ? obj.user.avatarUrl : "https://via.placeholder.com/50",  // Заменяем на заглушку
+                fullName: obj ? obj.user.fullName : "Загружается...",  // Заменяем на "Загружается..."
               }}
-              createdAt={'12 июня 2022 г.'}
-              viewsCount={150}
-              commentsCount={3}
-              tags={['react', 'fun', 'typescript']}
-              isLoading={true}
-              isEditable
+              createdAt={obj ? obj.createdAt : 'Загружается...'}  // Заглушка для даты
+              viewsCount={obj ? obj.viewsCount : 0}  // Если данных нет, показываем 0
+              commentsCount={obj ? obj.commentsCount : 0}  // Заглушка для количества комментариев
+              tags={obj ? obj.tags : []}  // Заглушка для тегов
+              isLoading={isPostLoading}  // Показываем состояние загрузки
+              isEditable={false}  // Можно добавить логику для редактируемости
             />
           ))}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={['react', 'typescript', 'заметки']} isLoading={false} />
+          <TagsBlock items={tags.items} isLoading={false} />
           <CommentsBlock
             items={[
               {
