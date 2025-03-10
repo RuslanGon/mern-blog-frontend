@@ -26,23 +26,22 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {/* Если посты загружаются, показываем 5 пустых загрузочных блоков */}
           {(isPostLoading ? [...Array(5)] : posts.items).map((obj, index) => (
             <Post
-              key={index}  // Добавляем ключ для каждого элемента в списке
-              id={obj ? obj._id : index}  // Используем ID поста или индекс для загрузки
-              title={obj ? obj.title : "Загружается..."}  // Если данные загружаются, показываем "Загружается..."
-              imageUrl={obj ? obj.imageUrl : "https://via.placeholder.com/150"}  // Заменяем на заглушку, если данные не загружены
+              key={index}  
+              id={obj ? obj._id : index}  
+              title={obj ? obj.title : "Загружается..."}  
+              imageUrl={obj ? obj.imageUrl : "https://via.placeholder.com/150"}  
               user={{
-                avatarUrl: obj ? obj.user.avatarUrl : "https://via.placeholder.com/50",  // Заменяем на заглушку
-                fullName: obj ? obj.user.fullName : "Загружается...",  // Заменяем на "Загружается..."
+                avatarUrl: obj ? obj.user.avatarUrl : "https://via.placeholder.com/50",  
+                fullName: obj ? obj.user.fullName : "Загружается...",  
               }}
-              createdAt={obj ? obj.createdAt : 'Загружается...'}  // Заглушка для даты
-              viewsCount={obj ? obj.viewsCount : 0}  // Если данных нет, показываем 0
-              commentsCount={obj ? obj.commentsCount : 0}  // Заглушка для количества комментариев
-              tags={obj ? obj.tags : []}  // Заглушка для тегов
-              isLoading={isPostLoading}  // Показываем состояние загрузки
-              isEditable={false}  // Можно добавить логику для редактируемости
+              createdAt={obj ? obj.createdAt : 'Загружается...'}  
+              viewsCount={obj ? obj.viewsCount : 0}  
+              commentsCount={obj ? obj.commentsCount : 0} 
+              tags={obj ? obj.tags : []}  
+              isLoading={isPostLoading}  
+              isEditable={false}  
             />
           ))}
         </Grid>
