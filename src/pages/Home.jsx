@@ -40,8 +40,7 @@ export const Home = () => {
               viewsCount={obj ? obj.viewsCount : 0}  
               commentsCount={obj ? obj.commentsCount : 0} 
               tags={obj ? obj.tags : []}  
-              isLoading={isPostLoading}  
-              isEditable={false}  
+              isEditable
             />
           ))}
         </Grid>
