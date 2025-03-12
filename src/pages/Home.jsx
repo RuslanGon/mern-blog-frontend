@@ -6,17 +6,20 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../redux/slices/post.js';
+import { fetchPosts, fetchTags } from '../redux/slices/post.js';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => state.posts.posts);  // Получаем посты
-  const tags = useSelector(state => state.posts.tags);  // Получаем теги
-  const isPostLoading = posts.status === 'loading';  // Проверка статуса загрузки постов
+  const posts = useSelector(state => state.posts.posts);  
+  const tags = useSelector(state => state.posts.tags);  
+  const isPostLoading = posts.status === 'loading';  
 
   useEffect(() => {
     dispatch(fetchPosts());  // Загружаем посты при монтировании компонента
+    dispatch(fetchTags())  // Загружаем таги при монтировании компонента
   }, [dispatch]);
+
+  
 
   return (
     <>
