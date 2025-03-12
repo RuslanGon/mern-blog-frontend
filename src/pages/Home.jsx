@@ -35,27 +35,24 @@ export const Home = () => {
         <Grid item xs={8}>
           {(isPostLoading ? [...Array(5)] : posts?.items || []).map((obj, index) => (
             <Post
-              key={obj?._id || index} 
-              id={obj?._id || index}
-              title={obj?.title || "Загружается..."} 
-              imageUrl={obj?.imageUrl || "https://via.placeholder.com/150"}  
-              user={{
-                avatarUrl: obj?.user?.avatarUrl || "https://via.placeholder.com/50",  
-                fullName: obj?.user?.fullName || "Загружается...", 
-              }}
-              createdAt={obj?.createdAt || "Загружается..."}  
-              viewsCount={obj?.viewsCount ?? 0}  
-              commentsCount={obj?.commentsCount ?? 0}  
-              tags={Array.isArray(obj?.tags) ? obj.tags : []}  
-              isEditable
-            />
+            key={obj?._id || index} 
+            id={obj?._id || index}
+            title={obj?.title || "Загружается..."} 
+            imageUrl={obj?.imageUrl || 'https://via.placeholder.com/150'}  // Добавьте дефолтное изображение на случай, если отсутствует
+            user={{
+              avatarUrl: obj?.user?.avatarUrl || 'https://via.placeholder.com/150',  // Добавьте дефолтное изображение для аватара
+              fullName: obj?.user?.fullName || 'Неизвестный',  // Добавьте дефолтное имя
+            }}
+            createdAt={obj?.createdAt || "Загружается..."}  
+            viewsCount={obj?.viewsCount ?? 0}  
+            commentsCount={obj?.commentsCount ?? 0}  
+            tags={Array.isArray(obj?.tags) ? obj.tags : []}  
+            isEditable
+          />
           ))}
         </Grid>
         <Grid item xs={4}>
-          {/* Отображаем блок с тегами, если теги загружаются */}
           <TagsBlock items={tags.items || []} isLoading={isTagsLoading} />
-          
-          {/* Отображаем блок с комментариями, если комментарии есть */}
           <CommentsBlock
             items={[
               {
@@ -73,7 +70,7 @@ export const Home = () => {
                 text: 'Когда отображаются три и более строки, аватар не выравнивается по верхнему краю. Вам следует установить свойство, чтобы выровнять аватар по верхнему краю.',
               },
             ]}
-            isLoading={false}  // Здесь нет состояния загрузки для комментариев
+            isLoading={false}  
           />
         </Grid>
       </Grid>
