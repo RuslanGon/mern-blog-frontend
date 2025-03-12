@@ -10,16 +10,20 @@ import { fetchPosts, fetchTags } from '../redux/slices/post.js';
 
 export const Home = () => {
   const dispatch = useDispatch();
+  
+  // Получаем данные о постах и тегах из состояния
   const posts = useSelector(state => state.posts.posts);  
   const tags = useSelector(state => state.posts.tags);  
-  const isPostLoading = posts.status === 'loading';  
-
-  useEffect(() => {
-    dispatch(fetchPosts());  // Загружаем посты при монтировании компонента
-    dispatch(fetchTags())  // Загружаем таги при монтировании компонента
-  }, [dispatch]);
-
   
+  // Проверяем, загружаются ли посты и теги
+  const isPostLoading = posts?.status === 'loading';  
+  const isTagsLoading = tags?.status === 'loading';  
+
+  // Загружаем данные при монтировании компонента
+  useEffect(() => {
+    dispatch(fetchPosts());
+    // dispatch(fetchTags());
+  }, [dispatch]);
 
   return (
     <>
@@ -28,27 +32,30 @@ export const Home = () => {
         <Tab label="Популярные" />
       </Tabs>
       <Grid container spacing={4}>
-        <Grid xs={8} item>
-          {(isPostLoading ? [...Array(5)] : posts.items).map((obj, index) => (
+        <Grid item xs={8}>
+          {(isPostLoading ? [...Array(5)] : posts?.items || []).map((obj, index) => (
             <Post
-              key={index}  
-              id={obj ? obj._id : index}  
-              title={obj ? obj.title : "Загружается..."}  
-              imageUrl={obj ? obj.imageUrl : "https://via.placeholder.com/150"}  
+              key={obj?._id || index} 
+              id={obj?._id || index}
+              title={obj?.title || "Загружается..."} 
+              imageUrl={obj?.imageUrl || "https://via.placeholder.com/150"}  
               user={{
-                avatarUrl: obj ? obj.user.avatarUrl : "https://via.placeholder.com/50",  
-                fullName: obj ? obj.user.fullName : "Загружается...",  
+                avatarUrl: obj?.user?.avatarUrl || "https://via.placeholder.com/50",  
+                fullName: obj?.user?.fullName || "Загружается...", 
               }}
-              createdAt={obj ? obj.createdAt : 'Загружается...'}  
-              viewsCount={obj ? obj.viewsCount : 0}  
-              commentsCount={obj ? obj.commentsCount : 0} 
-              tags={obj ? obj.tags : []}  
+              createdAt={obj?.createdAt || "Загружается..."}  
+              viewsCount={obj?.viewsCount ?? 0}  
+              commentsCount={obj?.commentsCount ?? 0}  
+              tags={Array.isArray(obj?.tags) ? obj.tags : []}  
               isEditable
             />
           ))}
         </Grid>
-        <Grid xs={4} item>
-          <TagsBlock items={tags.items} isLoading={false} />
+        <Grid item xs={4}>
+          {/* Отображаем блок с тегами, если теги загружаются */}
+          <TagsBlock items={tags.items || []} isLoading={isTagsLoading} />
+          
+          {/* Отображаем блок с комментариями, если комментарии есть */}
           <CommentsBlock
             items={[
               {
@@ -63,10 +70,10 @@ export const Home = () => {
                   fullName: 'Иван Иванов',
                   avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
                 },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
+                text: 'Когда отображаются три и более строки, аватар не выравнивается по верхнему краю. Вам следует установить свойство, чтобы выровнять аватар по верхнему краю.',
               },
             ]}
-            isLoading={false}
+            isLoading={false}  // Здесь нет состояния загрузки для комментариев
           />
         </Grid>
       </Grid>
