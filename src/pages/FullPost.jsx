@@ -3,10 +3,12 @@ import React from "react";
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
+import { Link } from "react-router-dom";
 
 export const FullPost = () => {
   return (
     <>
+  <Link to="/" className="link">🔙</Link>
       <Post
         id={1}
         title="Roast the code #1 | Rock Paper Scissors"
