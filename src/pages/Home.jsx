@@ -22,7 +22,7 @@ export const Home = () => {
   // Загружаем данные при монтировании компонента
   useEffect(() => {
     dispatch(fetchPosts());
-    // dispatch(fetchTags());
+    dispatch(fetchTags());
   }, [dispatch]);
 
   return (
