@@ -37,7 +37,7 @@ export const Home = () => {
             
             <Post
             key={obj?._id || index} 
-            _id={obj?._id || index}
+            id={obj?._id || index}
             title={obj?.title || "Загружается..."} 
             imageUrl={obj?.imageUrl || 'https://via.placeholder.com/150'}  // Добавьте дефолтное изображение на случай, если отсутствует
             user={{
