@@ -8,13 +8,13 @@ import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth.js";
 
 function App() {
 
-//  const dispatch = useDispatch() 
-//  const isAuth = useSelector(selectIsAuth);
+ const dispatch = useDispatch() 
+ const isAuth = useSelector(selectIsAuth);
 
 
-// useEffect(() => {
-//   dispatch(fetchAuthMe())
-// },[dispatch]) 
+useEffect(() => {
+  dispatch(fetchAuthMe())
+},[dispatch]) 
 
   return (
     <>
