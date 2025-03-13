@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios.js";
 
-// Асинхронный экшен для получения данных пользователя
-export const fetchUserData = createAsyncThunk("auth/fetchUserData", async (params) => {
+
+export const fetchAuth = createAsyncThunk("auth/fetchUserData", async (params) => {
     const { data } = await axios.post("/auth/login", params);
     return data;
 });
@@ -15,19 +15,26 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    logOut: (state) => {state.data = null}
+  },
   extraReducers: (builder) => {
     builder
-    .addCase(fetchUserData.pending, (state) => {
+    .addCase(fetchAuth.pending, (state) => {
       state.status = "loading";  
     })
-    .addCase(fetchUserData.fulfilled, (state, action) => {
+    .addCase(fetchAuth.fulfilled, (state, action) => {
       state.status = "succeeded"; 
       state.data = action.payload; 
     })
-    .addCase(fetchUserData.rejected, (state) => {
+    .addCase(fetchAuth.rejected, (state) => {
       state.status = "error"; 
     });
   },
 });
 
+export const selectIsAuth = state => Boolean(state.auth.data)
+
 export const authReducer = authSlice.reducer;
+
+export const {logOut} = authSlice.actions
