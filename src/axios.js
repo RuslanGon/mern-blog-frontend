@@ -4,9 +4,13 @@ const instatnce = axios.create({
     baseURL: 'http://localhost:4444'
 })
 
+
 instatnce.interceptors.request.use((config) => {
-    config.headers.Authorization = window.localStorage.getItem('token')
-    return config
-})
+    const token = window.localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`; // Добавляем "Bearer"
+    }
+    return config;
+});
 
 export default instatnce
