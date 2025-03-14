@@ -48,7 +48,6 @@ export const Home = () => {
             viewsCount={obj?.viewsCount ?? 0}  
             commentsCount={obj?.commentsCount ?? 0}  
             tags={Array.isArray(obj?.tags) ? obj.tags : []}  
-            // isEditable={userData?._id === obj.user._id}
             isEditable={userData?._id === obj?.user?._id}
           />
           ))}
