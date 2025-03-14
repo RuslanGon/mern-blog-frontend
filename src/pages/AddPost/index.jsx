@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
-
+import axios from '../../axios.js'
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import { useSelector } from 'react-redux';
@@ -21,7 +21,18 @@ export const AddPost = () => {
   const inputFileRef = useRef(null)
 
 
-  const handleChangeFile = () => {};
+  const handleChangeFile = async (event) => {
+try {
+  const formData = new FormData()
+  const file = event.target.files[0]
+  formData.append('image', file )
+  const { data } = await axios.post('/upload', formData)
+console.log(data);
+} catch (error) {
+  console.log(error);
+  alert('Ошибка при загрузке файла')
+}
+  };
 
   const onClickRemoveImage = () => {};
 
