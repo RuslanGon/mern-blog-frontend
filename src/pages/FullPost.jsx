@@ -44,9 +44,8 @@ export const FullPost = () => {
         viewsCount={data.viewsCount} 
         commentsCount={data.commentsCount} 
         tags={data.tags || []} 
-        isFullPost
-      >
-        <p>{data.content}</p> {/* Контент поста */}
+        isFullPost>
+        <p>{data.text}</p>
       </Post>
 
       <CommentsBlock
