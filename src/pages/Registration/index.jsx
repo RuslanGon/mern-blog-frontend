@@ -23,7 +23,7 @@ export const Registration = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      fullname: '',
+      fullName: '',
       email: "",
       password: "",
     },
@@ -46,7 +46,7 @@ export const Registration = () => {
   }, [])
 
  if(isAuth) {
-  return <Navigate to={'/login'} />
+  return <Navigate to={'/'} />
  }
 
   return (
@@ -57,35 +57,37 @@ export const Registration = () => {
       <div className={styles.avatar}>
         <Avatar sx={{ width: 100, height: 100 }} />
       </div>
-      <TextField
-        error={Boolean(errors.fullname?.message)}
-        helperText={errors.fullname?.message}
-        {...register("fullname", { required: "Укажите полное имя" })}
-        className={styles.field}
-        label="Полное имя"
-        fullWidth
-      />
-      <TextField
-        type="email"
-        error={Boolean(errors.email?.message)}
-        helperText={errors.email?.message}
-        {...register("email", { required: "Укажите почту" })}
-        className={styles.field}
-        label="E-Mail"
-        fullWidth
-      />
-      <TextField
-        type="email"
-        error={Boolean(errors.email?.message)}
-        helperText={errors.email?.message}
-        {...register("email", { required: "Укажите почту" })}
-        className={styles.field}
-        label="Пароль"
-        fullWidth
-      />
-      <Button size="large" variant="contained" fullWidth>
-        Зарегистрироваться
-      </Button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          error={Boolean(errors.fullName?.message)}
+          helperText={errors.fullName?.message}
+          {...register("fullName", { required: "Укажите полное имя" })}
+          className={styles.field}
+          label="Полное имя"
+          fullWidth
+        />
+        <TextField
+          type="email"
+          error={Boolean(errors.email?.message)}
+          helperText={errors.email?.message}
+          {...register("email", { required: "Укажите почту" })}
+          className={styles.field}
+          label="E-Mail"
+          fullWidth
+        />
+        <TextField
+          type="password"
+          error={Boolean(errors.password?.message)}
+          helperText={errors.password?.message}
+          {...register("password", { required: "Укажите пароль" })}
+          className={styles.field}
+          label="Пароль"
+          fullWidth
+        />
+        <Button type='submit' size="large" variant="contained" fullWidth>
+          Зарегистрироваться
+        </Button>
+      </form>
     </Paper>
   );
 };
