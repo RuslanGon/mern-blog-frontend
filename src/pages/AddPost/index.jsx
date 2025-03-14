@@ -11,11 +11,10 @@ import { selectIsAuth } from '../../redux/slices/auth.js';
 import { Navigate } from 'react-router-dom';
 
 export const AddPost = () => {
+  const imageUrl = '';
+
   const isAuth = useSelector(selectIsAuth)
 
-  
-
-  const imageUrl = '';
   const [value, setValue] = React.useState('');
 
   const handleChangeFile = () => {};
