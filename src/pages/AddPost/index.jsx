@@ -43,6 +43,18 @@ try {
     setValue(value);
   }, []);
 
+  const onSubmit = async () => {
+try {
+  setIsLoading(true)
+  const fields = {
+    title: 
+  }
+  const {data} = await axios.post('/posts', fields)
+} catch (error) {
+  
+}
+  }
+
   const options = React.useMemo(
     () => ({
       spellChecker: false,
@@ -96,7 +108,7 @@ try {
           Опубликовать
         </Button>
         <a href="/">
-          <Button size="large">Отмена</Button>
+          <Button onClick={onSubmit} size="large">Отмена</Button>
         </a>
       </div>
     </Paper>
