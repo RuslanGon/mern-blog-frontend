@@ -49,7 +49,7 @@ export const FullPost = () => {
       </Post>
 
       <CommentsBlock
-        items={data.comments || []} // Комментарии, если они есть
+        items={data.comments || []} 
         isLoading={false}
       >
         <Index /> {/* Компонент добавления комментария */}
