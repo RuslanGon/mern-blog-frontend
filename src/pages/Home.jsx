@@ -14,6 +14,7 @@ export const Home = () => {
   // Получаем данные о постах и тегах из состояния
   const posts = useSelector(state => state.posts.posts);  
   const tags = useSelector(state => state.posts.tags);  
+  const userData = useSelector(state => state.auth.data)
   
   // Проверяем, загружаются ли посты и теги
   const isPostLoading = posts?.status === 'loading';  
@@ -34,21 +35,21 @@ export const Home = () => {
       <Grid container spacing={4}>
         <Grid item xs={8}>
           {(isPostLoading ? [...Array(5)] : posts?.items || []).map((obj, index) => (
-            
             <Post
             key={obj?._id || index} 
             id={obj?._id || index}
             title={obj?.title || "Загружается..."} 
-            imageUrl={obj?.imageUrl || 'https://via.placeholder.com/150'}  // Добавьте дефолтное изображение на случай, если отсутствует
+            imageUrl={obj?.imageUrl || 'https://via.placeholder.com/150'} 
             user={{
-              avatarUrl: obj?.user?.avatarUrl || 'https://via.placeholder.com/150',  // Добавьте дефолтное изображение для аватара
-              fullName: obj?.user?.fullName || 'Неизвестный',  // Добавьте дефолтное имя
+              avatarUrl: obj?.user?.avatarUrl || 'https://via.placeholder.com/150', 
+              fullName: obj?.user?.fullName || 'Неизвестный', 
             }}
             createdAt={obj?.createdAt || "Загружается..."}  
             viewsCount={obj?.viewsCount ?? 0}  
             commentsCount={obj?.commentsCount ?? 0}  
             tags={Array.isArray(obj?.tags) ? obj.tags : []}  
-            isEditable
+            // isEditable={userData?._id === obj.user._id}
+            isEditable={userData?._id === obj?.user?._id}
           />
           ))}
         </Grid>
