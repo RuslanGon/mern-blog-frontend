@@ -27,7 +27,7 @@ export const Registration = () => {
       email: "",
       password: "",
     },
-    // mode: 'onChange'
+    mode: 'onChange'
   }); 
 
   const onSubmit = async (values) => {
@@ -84,7 +84,7 @@ export const Registration = () => {
           label="Пароль"
           fullWidth
         />
-        <Button disabled={isValid} type='submit' size="large" variant="contained" fullWidth>
+        <Button disabled={!isValid} type='submit' size="large" variant="contained" fullWidth>
           Зарегистрироваться
         </Button>
       </form>
