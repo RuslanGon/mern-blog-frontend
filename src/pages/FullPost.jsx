@@ -38,7 +38,7 @@ export const FullPost = () => {
       <Post
         id={data._id} 
         title={data.title} 
-        imageUrl={data.imageUrl || "default-image-url"} 
+        imageUrl={`http://localhost:4444${data.imageUrl}`} 
         user={data.user} 
         createdAt={new Date(data.createdAt).toLocaleDateString()} 
         viewsCount={data.viewsCount} 
