@@ -8,13 +8,14 @@ import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import { useSelector } from 'react-redux';
 import { selectIsAuth } from '../../redux/slices/auth.js';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const AddPost = () => {
+const navigate = useNavigate()
 
   const isAuth = useSelector(selectIsAuth)
 
-  const [value, setValue] = useState('');
+  const [text, setText] = useState('');
   const [title, setTitle] = useState('')
   const [tags, setTags] = useState('')
   const [imageUrl, setImageUrl] = useState('')
@@ -36,22 +37,28 @@ try {
   };
 
   const onClickRemoveImage = () => {
-    setImageUrl()
+    setImageUrl('')
   };
 
   const onChange = React.useCallback((value) => {
-    setValue(value);
+    setText(value);
   }, []);
 
   const onSubmit = async () => {
 try {
   setIsLoading(true)
   const fields = {
-    title: 
+    title,
+    imageUrl,
+    tags,
+    text
   }
   const {data} = await axios.post('/posts', fields)
+  const id = data._id
+  navigate(`/posts/${id}`)
 } catch (error) {
-  
+  console.log(error);
+  alert('Ошибка при создании статьи')
 }
   }
 
@@ -102,13 +109,13 @@ try {
       value={tags}
       onChange={e => setTags(e.target.value)}
        classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
-      <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
+      <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button onClick={onSubmit}  size="large" variant="contained"  disabled={isLoading}>
           Опубликовать
         </Button>
         <a href="/">
-          <Button onClick={onSubmit} size="large">Отмена</Button>
+          <Button size="large">Отмена</Button>
         </a>
       </div>
     </Paper>
