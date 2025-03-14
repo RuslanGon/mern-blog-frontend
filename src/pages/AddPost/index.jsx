@@ -11,13 +11,13 @@ import { selectIsAuth } from '../../redux/slices/auth.js';
 import { Navigate } from 'react-router-dom';
 
 export const AddPost = () => {
-  const imageUrl = '';
 
   const isAuth = useSelector(selectIsAuth)
 
   const [value, setValue] = useState('');
   const [title, setTitle] = useState('')
   const [tags, setTags] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
   const inputFileRef = useRef(null)
 
 
@@ -27,7 +27,7 @@ try {
   const file = event.target.files[0]
   formData.append('image', file )
   const { data } = await axios.post('/upload', formData)
-console.log(data);
+  setImageUrl(data.url)
 } catch (error) {
   console.log(error);
   alert('Ошибка при загрузке файла')
@@ -66,12 +66,12 @@ console.log(data);
       </Button>
       <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
+        <>
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
           Удалить
         </Button>
-      )}
-      {imageUrl && (
         <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        </>
       )}
       <br />
       <br />
