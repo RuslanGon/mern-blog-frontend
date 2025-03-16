@@ -55,6 +55,7 @@ try {
     tags,
     text
   }
+  console.log(text);
   const {data} = isEditing ? await axios.patch(`/posts/${id}`, fields) : await axios.post('/posts', fields)
   const _id = isEditing ? id : data._id
   navigate(`/posts/${_id}`)
@@ -66,16 +67,17 @@ try {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/posts/${id}`).then(({data}) => {
-        setTitle(data.title)
-        setText(data.text)
-        setImageUrl(data.imageUrl)
-        setTags(data.tags.join(','))
-      }).catch(error =>{
-        console.log(error);
-      alert('Ошибка при получении статьи')
-      }
-      )
+      axios.get(`/posts/${id}`)
+        .then(({ data }) => {
+          setTitle(data.title);
+          setText(data.text); 
+          setImageUrl(data.imageUrl);
+          setTags(data.tags.join(',')); 
+        })
+        .catch(error => {
+          console.log(error);
+          alert('Ошибка при получении статьи');
+        });
     }
   }, [id]);
 

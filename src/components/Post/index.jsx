@@ -26,6 +26,7 @@ export const Post = ({
   isFullPost,
   isLoading,
   isEditable,
+  text
 }) => {
   const dispatch = useDispatch()
 
@@ -72,7 +73,9 @@ export const Post = ({
               </li>
             ))}
           </ul>
+          {text && <div className={styles.textContent}><p>{text}</p></div>}
           {children && <div className={styles.content}>{children}</div>}
+          
           <ul className={styles.postDetails}>
             <li>
               <EyeIcon />

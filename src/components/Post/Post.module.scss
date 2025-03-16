@@ -156,3 +156,9 @@ $blue: #4361ee;
   opacity: 0;
   transition: all 0.15s ease-in-out;
 }
+
+.textContent {
+  display: block;
+  visibility: visible;
+  color: black; /* Убедитесь, что текст не прозрачный */
+}

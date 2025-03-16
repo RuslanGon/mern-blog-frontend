@@ -14,6 +14,7 @@ export const FullPost = () => {
     setIsLoading(true); 
     axios.get(`/posts/${id}`)
       .then(res => {
+        console.log("Данные поста:", res.data); // <--- ПРОВЕРКА
         setData(res.data); 
         setIsLoading(false); 
       })
@@ -36,23 +37,23 @@ export const FullPost = () => {
       <Link to="/" className="link">🔙</Link>
 
       <Post
-        id={data._id} 
-        title={data.title} 
-        imageUrl={`http://localhost:4444${data.imageUrl}`} 
-        user={data.user} 
-        createdAt={new Date(data.createdAt).toLocaleDateString()} 
-        viewsCount={data.viewsCount} 
-        commentsCount={data.commentsCount} 
-        tags={data.tags || []} 
-        isFullPost>
-        <p>{data.text}</p>
-      </Post>
+  id={data._id} 
+  title={data.title} 
+  imageUrl={`http://localhost:4444${data.imageUrl}`} 
+  user={data.user} 
+  createdAt={new Date(data.createdAt).toLocaleDateString()} 
+  viewsCount={data.viewsCount} 
+  commentsCount={data.commentsCount} 
+  tags={data.tags || []} 
+  isFullPost
+  text={data.text}  
+/>
 
       <CommentsBlock
         items={data.comments || []} 
         isLoading={false}
       >
-        <Index /> {/* Компонент добавления комментария */}
+        <Index /> 
       </CommentsBlock>
     </>
   );
