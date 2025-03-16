@@ -55,9 +55,9 @@ try {
     tags,
     text
   }
-  const {data} = await axios.post('/posts', fields)
-  const id = data._id
-  navigate(`/posts/${id}`)
+  const {data} = isEditing ? await axios.patch(`/posts/${id}`, fields) : await axios.post('/posts', fields)
+  const _id = isEditing ? id : data._id
+  navigate(`/posts/${_id}`)
 } catch (error) {
   console.log(error);
   alert('Ошибка при создании статьи')
