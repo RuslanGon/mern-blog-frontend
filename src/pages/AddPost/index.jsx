@@ -22,6 +22,7 @@ const {id} = useParams()
   const [imageUrl, setImageUrl] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const inputFileRef = useRef(null)
+  const isEditing = Boolean(id)
 
 
   const handleChangeFile = async (event) => {
@@ -128,7 +129,7 @@ try {
       <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick={onSubmit}  size="large" variant="contained"  disabled={isLoading}>
-          Опубликовать
+          {isEditing? "Сохранить" : 'Опубликовать'}
         </Button>
         <a href="/">
           <Button size="large">Отмена</Button>
